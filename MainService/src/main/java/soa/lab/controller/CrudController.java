@@ -29,7 +29,6 @@ public class CrudController {
 
     @PostMapping("/orgs")
     public ResponseEntity<Organization> addOrg(@RequestBody OrganizationDTO orgDTO) {
-        //todo: ex handling (IllegalArgumentException, ConstraintViolationException, PropertyValueException, ...)
         Organization org = new Organization(orgDTO);
         return new ResponseEntity<>(organizationService.addOrg(org), HttpStatus.OK);
     }
