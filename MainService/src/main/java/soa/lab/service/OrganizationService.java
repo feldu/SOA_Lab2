@@ -1,11 +1,15 @@
 package soa.lab.service;
 
+import cz.jirutka.rsql.parser.RSQLParser;
+import cz.jirutka.rsql.parser.ast.Node;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import soa.lab.entity.Organization;
 import soa.lab.entity.OrganizationType;
 import soa.lab.exception.DataNotFoundException;
 import soa.lab.repository.OrganizationRepository;
+import soa.lab.rsql.CustomRsqlVisitor;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -19,8 +23,12 @@ public class OrganizationService {
         this.organizationRepository = organizationRepository;
     }
 
-    public List<Organization> getOrgs() {
-        return organizationRepository.findAll();
+    public List<Organization> getOrgs(String filter) {
+        if (filter == null || filter.isEmpty())
+            return organizationRepository.findAll();
+        Node rootNode = new RSQLParser().parse(filter);
+        Specification<Organization> spec = rootNode.accept(new CustomRsqlVisitor<>());
+        return organizationRepository.findAll(spec);
     }
 
     public Organization getOrgById(Long id) {
