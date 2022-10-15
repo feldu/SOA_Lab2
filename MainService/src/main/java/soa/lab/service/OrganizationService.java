@@ -3,9 +3,11 @@ package soa.lab.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import soa.lab.entity.Organization;
+import soa.lab.entity.OrganizationType;
 import soa.lab.exception.DataNotFoundException;
 import soa.lab.repository.OrganizationRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -55,4 +57,19 @@ public class OrganizationService {
         organizationRepository.deleteById(id);
         return organization;
     }
+
+    public List<Long> getOrgsGroupCntByAddress() {
+        return organizationRepository.getOrgsGroupCntByAddress();
+    }
+
+    public List<Organization> getOrgsWhereTypeGreaterThanGiven(String type) {
+        return organizationRepository.getOrganizationsByTypeGreaterThan(OrganizationType.valueOf(type));
+    }
+
+    @Transactional
+    public List<Organization> deleteOrganizationsByAnnualTurnover(Float annualTurnover) {
+        return organizationRepository.deleteOrganizationsByAnnualTurnoverEquals(annualTurnover);
+
+    }
+
 }
