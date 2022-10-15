@@ -6,6 +6,7 @@ import lombok.Data;
 public class OrganizationDTO {
     private long id;
     private String name;
+    private Integer employeesCount;
     private CoordinatesDTO coordinates;
     private java.time.ZonedDateTime creationDate;
     private Float annualTurnover;

@@ -7,6 +7,7 @@ import soa.lab.dto.OrganizationDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +24,11 @@ public class Organization {
     @NotNull
     @NotEmpty
     private String name;
+
+    @Column(name = "employees_count", nullable = false)
+    @NotNull
+    @Min(0)
+    private Integer employeesCount;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "coordinates_id", referencedColumnName = "id", nullable = false)
@@ -48,6 +54,7 @@ public class Organization {
 
     public Organization(OrganizationDTO orgDTO) {
         this.name = orgDTO.getName();
+        this.employeesCount = orgDTO.getEmployeesCount();
         this.coordinates = new Coordinates(orgDTO.getCoordinates());
         this.creationDate = orgDTO.getCreationDate();
         this.annualTurnover = orgDTO.getAnnualTurnover();
