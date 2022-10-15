@@ -23,9 +23,8 @@ public class CrudController {
     }
 
     @GetMapping("/orgs")
-    public ResponseEntity<List<Organization>> getOrgs(@RequestParam(required = false) String filter) {
-        //todo: sort, pagination
-        return new ResponseEntity<>(organizationService.getOrgs(filter), HttpStatus.OK);
+    public ResponseEntity<List<Organization>> getOrgs(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size, @RequestParam(required = false) String filter, @RequestParam(required = false) String sort) {
+        return new ResponseEntity<>(organizationService.getOrgs(page, size, filter, sort), HttpStatus.OK);
     }
 
     @PostMapping("/orgs")

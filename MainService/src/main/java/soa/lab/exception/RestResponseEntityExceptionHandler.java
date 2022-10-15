@@ -26,7 +26,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(e, errorDTO, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
-    @ExceptionHandler(value = {ConstraintViolationException.class, IllegalArgumentException.class, PropertyValueException.class, DataIntegrityViolationException.class})
+    @ExceptionHandler(value = {ConstraintViolationException.class, IllegalArgumentException.class, PropertyValueException.class, DataIntegrityViolationException.class, ArrayIndexOutOfBoundsException.class})
     protected ResponseEntity<Object> handleDataIncorrect(RuntimeException e, WebRequest request) {
         log.error("{}: {}", e.getClass().getSimpleName(), e.getMessage());
         ErrorDTO errorDTO = new ErrorDTO(e.getMessage());
