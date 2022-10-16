@@ -12,7 +12,7 @@ export default function GetOrgsForm() {
     return (
 
         <Box mx={5} py={5} px={5} borderWidth={1} borderRadius={14} boxShadow="lg"
-             h="100%" direction="column" w="full" alignItems='center' minW={300}>
+             h="100%" w="full" minW={300}>
             <form>
                 <Heading align="center" as="h4" size="md" letterSpacing={"tighter"} mx={10} mb={5}>
                     <Text>Получить организации</Text>
