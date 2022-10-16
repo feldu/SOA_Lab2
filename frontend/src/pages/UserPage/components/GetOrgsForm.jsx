@@ -14,10 +14,16 @@ export default function GetOrgsForm() {
     const [size, setSize] = useState();
     const [filter, setFilter] = useState("");
     const [sort, setSort] = useState("");
+    const [id, setId] = useState("");
 
-    const submitHandler = e => {
+    const getSubmitHandler = e => {
         e.preventDefault();
         orgsState.fetchOrgs({page, size, filter, sort});
+    };
+
+    const getByIdSubmitHandler = e => {
+        e.preventDefault();
+        orgsState.getOrgById(id);
     };
 
     return (
@@ -46,7 +52,16 @@ export default function GetOrgsForm() {
                                  placeholder={"id,desc;coordinates.y,asc;..."}/>
                 </Box>
                 <Flex mt={5} justifyContent="center">
-                    <Button colorScheme='blue' onClick={submitHandler}>Получить</Button>
+                    <Button colorScheme='blue' onClick={getSubmitHandler}>Получить</Button>
+                </Flex>
+            </form>
+            <form>
+                <Heading align="center" as="h4" size="sm" letterSpacing={"tighter"} mx={10} my={5}>
+                    <Text>Получить организации по id</Text>
+                </Heading>
+                <NumberControl label={"id"} min={1} value={id} setValue={setId}/>
+                <Flex mt={5} justifyContent="center">
+                    <Button colorScheme='blue' onClick={getByIdSubmitHandler}>Получить</Button>
                 </Flex>
             </form>
         </Box>

@@ -5,7 +5,7 @@ import AddUpdOrgsForm from "./components/AddUpdOrgsForm";
 import DeleteOrgsForm from "./components/DeleteOrgsForm";
 import AdditionalGetOrgsForm from "./components/AdditionalGetOrgsForm";
 import FilteredGetOrgsForm from "./components/FilteredGetOrgsForm";
-import ResultTable from "./components/ResultTable";
+import {ResultTable} from "./components/ResultTable";
 
 export default function UserPage() {
     return (

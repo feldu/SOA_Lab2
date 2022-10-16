@@ -2,8 +2,10 @@ import {Box, Heading, Table, Tbody, Td, Text, Th, Thead, Tr} from "@chakra-ui/re
 import {useTable} from "react-table";
 import {orgsState} from "../../../globalState/orgs"
 import {useMemo} from "react";
+import {observer} from "mobx-react";
 
-export default function ResultTable() {
+export const ResultTable = observer(() => {
+
     const columns = useMemo(() => [
         {Header: 'id', accessor: 'id'},
         {Header: 'Name', accessor: 'name'},
@@ -32,7 +34,7 @@ export default function ResultTable() {
 
     ], []);
     const data = useMemo(() =>
-        orgsState.orgs.map(o => ({
+        orgsState.orgs?.map(o => ({
             id: o.id,
             name: o.name,
             coordinatesX: o.coordinates.x,
@@ -45,7 +47,7 @@ export default function ResultTable() {
             officialAddressTownX: o.officialAddress.town.x,
             officialAddressTownY: o.officialAddress.town.y,
             officialAddressTownName: o.officialAddress.town.name,
-        })), []);
+        })), [orgsState.orgs]);
 
     const {
         getTableProps,
@@ -61,10 +63,6 @@ export default function ResultTable() {
             <Heading align="center" as="h4" size="md" letterSpacing={"tighter"} mx={10} mb={5}>
                 <Text>Результат запроса</Text>
             </Heading>
-            {
-                //todo: работай сука
-            }
-            {JSON.stringify(orgsState.orgs)}
             <Table {...getTableProps()}>
                 <Thead>
                     {headerGroups.map(headerGroup => (
@@ -91,4 +89,4 @@ export default function ResultTable() {
 
         </Box>
     );
-}
+});
