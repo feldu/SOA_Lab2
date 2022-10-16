@@ -12,7 +12,6 @@ export default function UserPage() {
                 <Flex direction="row" w="100%" alignItems="stretch" mt={5}>
                     <GetOrgsForm/>
                     <AddUpdOrgsForm/>
-                    <GetOrgsForm/>
                 </Flex>
                 <Flex direction="row" w="100%" alignItems="stretch" mt={5}>
                     <GetOrgsForm/>
