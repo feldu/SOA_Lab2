@@ -26,11 +26,13 @@ public class FilterController {
 
     @GetMapping("/filter/turnover/{min-annual-turnover}/{max-annual-turnover}")
     public ResponseEntity<List<Organization>> filterOrgsByTurnover(@PathVariable("min-annual-turnover") Float min, @PathVariable("max-annual-turnover") Float max) {
+        log.info("Request to get orgs between {} and {} turnover values", min, max);
         return new ResponseEntity<>(filterService.filterOrgsByTurnover(min, max), HttpStatus.OK);
     }
 
     @GetMapping("/filter/employees/{min-employees-count}/{max-employees-count}")
     public ResponseEntity<List<Organization>> filterOrgsByEmployeesCount(@PathVariable("min-employees-count") Float min, @PathVariable("max-employees-count") Float max) {
+        log.info("Request to get orgs between {} and {} empoyees count values", min, max);
         return new ResponseEntity<>(filterService.filterOrgsByEmployeesCount(min, max), HttpStatus.OK);
     }
 }
