@@ -37,6 +37,7 @@ export const ResultTable = observer(() => {
         orgsState.orgs?.map(o => ({
             id: o.id,
             name: o.name,
+            employeesCount: o.employeesCount,
             coordinatesX: o.coordinates.x,
             coordinatesY: o.coordinates.y,
             creationDate: o.creationDate,

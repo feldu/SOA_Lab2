@@ -1,14 +1,13 @@
 import {action, observable} from "mobx";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:31510";
 
 export const orgsState = observable({
         orgs: observable([]),
 
         fetchOrgs(params) {
             axios
-                .get("/orgs", {params})
+                .get("http://localhost:31510/orgs", {params})
                 .then(response => {
                     this.orgs = response.data;
                     console.log(response.data)
@@ -19,9 +18,9 @@ export const orgsState = observable({
 
         addOrgs(params) {
             axios
-                .post("/orgs", params)
+                .post("http://localhost:31510/orgs", params)
                 .then(response => {
-                    this.orgs = response.data;
+                    this.orgs = [response.data];
                     console.log(response.data)
                 }).catch(e => {
                 alert(e.message + ": " + e.response.data.message)
@@ -29,7 +28,7 @@ export const orgsState = observable({
         },
         updateOrgs(params) {
             axios
-                .put("/orgs", params)
+                .put("http://localhost:31510/orgs", params)
                 .then(response => {
                     this.orgs = [response.data];
                     console.log(response.data)
@@ -39,7 +38,7 @@ export const orgsState = observable({
         },
         getOrgById(pathVariable) {
             axios
-                .get(`/orgs/${pathVariable}`)
+                .get(`http://localhost:31510/orgs/${pathVariable}`)
                 .then(response => {
                     this.orgs = [response.data];
                     console.log(response.data)
@@ -49,7 +48,7 @@ export const orgsState = observable({
         },
         deleteOrgById(pathVariable) {
             axios
-                .delete(`/orgs/${pathVariable}`)
+                .delete(`http://localhost:31510/orgs/${pathVariable}`)
                 .then(response => {
                     this.orgs = [response.data];
                     console.log(response.data)
@@ -60,7 +59,27 @@ export const orgsState = observable({
 
         deleteOrgsByAnal(params) {
             axios
-                .delete("/orgs/annualTurnover", {params})
+                .delete("http://localhost:31510/orgs/annualTurnover", {params})
+                .then(response => {
+                    this.orgs = response.data;
+                    console.log(response.data)
+                }).catch(e => {
+                alert(e.message + ": " + e.response.data.message)
+            });
+        },
+        getFilteredOrgsByAnal(pathVar1, pathVar2) {
+            axios
+                .get(`http://localhost:31511/orgdirectory/filter/turnover/${pathVar1}/${pathVar2}`)
+                .then(response => {
+                    this.orgs = response.data;
+                    console.log(response.data)
+                }).catch(e => {
+                alert(e.message + ": " + e.response.data.message)
+            });
+        },
+        getFilteredOrgsByEmployees(pathVar1, pathVar2) {
+            axios
+                .get(`http://localhost:31511/orgdirectory/filter/employees/${pathVar1}/${pathVar2}`)
                 .then(response => {
                     this.orgs = response.data;
                     console.log(response.data)
@@ -69,6 +88,27 @@ export const orgsState = observable({
             });
         },
 
+        getOrgsGroupCntByAddress() {
+            axios
+                .get("http://localhost:31510/orgs/group-count/by-address")
+                .then(response => {
+                    console.log(response.data)
+                    alert(`Groups: ${response.data}`);
+                }).catch(e => {
+                alert(e.message + ": " + e.response.data.message)
+            });
+        },
+
+        getOrgsWhereTypeGreaterThanGiven(params) {
+            axios
+                .get("http://localhost:31510/orgs/type", {params})
+                .then(response => {
+                    this.orgs = response.data;
+                    console.log(response.data)
+                }).catch(e => {
+                alert(e.message + ": " + e.response.data.message)
+            });
+        },
 
     },
     {
@@ -78,4 +118,6 @@ export const orgsState = observable({
         getOrgByIdOrgsById: action,
         deleteOrgById: action,
         deleteOrgsByAnal: action,
+        getFilteredOrgsByAnal: action,
+        getFilteredOrgsByEmployees: action,
     });
