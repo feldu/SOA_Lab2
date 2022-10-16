@@ -1,9 +1,9 @@
-import {Button} from "@chakra-ui/react";
+import UserPage from "./pages/UserPage/UserPage";
 
 function App() {
     return (
         <div className="App">
-            <Button colorScheme='teal'>Hello sukka</Button>
+            <UserPage/>
         </div>
     );
 }
