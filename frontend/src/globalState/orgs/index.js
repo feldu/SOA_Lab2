@@ -7,7 +7,7 @@ export const orgsState = observable({
 
         fetchOrgs(params) {
             axios
-                .get("http://localhost:31510/orgs", {params})
+                .get("https://localhost:31510/orgs", {params})
                 .then(response => {
                     this.orgs = response.data;
                     console.log(response.data)
@@ -18,7 +18,7 @@ export const orgsState = observable({
 
         addOrgs(params) {
             axios
-                .post("http://localhost:31510/orgs", params)
+                .post("https://localhost:31510/orgs", params)
                 .then(response => {
                     this.orgs = [response.data];
                     console.log(response.data)
@@ -28,7 +28,7 @@ export const orgsState = observable({
         },
         updateOrgs(params) {
             axios
-                .put("http://localhost:31510/orgs", params)
+                .put("https://localhost:31510/orgs", params)
                 .then(response => {
                     this.orgs = [response.data];
                     console.log(response.data)
@@ -38,7 +38,7 @@ export const orgsState = observable({
         },
         getOrgById(pathVariable) {
             axios
-                .get(`http://localhost:31510/orgs/${pathVariable}`)
+                .get(`https://localhost:31510/orgs/${pathVariable}`)
                 .then(response => {
                     this.orgs = [response.data];
                     console.log(response.data)
@@ -48,7 +48,7 @@ export const orgsState = observable({
         },
         deleteOrgById(pathVariable) {
             axios
-                .delete(`http://localhost:31510/orgs/${pathVariable}`)
+                .delete(`https://localhost:31510/orgs/${pathVariable}`)
                 .then(response => {
                     this.orgs = [response.data];
                     console.log(response.data)
@@ -59,7 +59,7 @@ export const orgsState = observable({
 
         deleteOrgsByAnal(params) {
             axios
-                .delete("http://localhost:31510/orgs/annualTurnover", {params})
+                .delete("https://localhost:31510/orgs/annualTurnover", {params})
                 .then(response => {
                     this.orgs = response.data;
                     console.log(response.data)
@@ -69,7 +69,7 @@ export const orgsState = observable({
         },
         getFilteredOrgsByAnal(pathVar1, pathVar2) {
             axios
-                .get(`http://localhost:31511/orgdirectory/filter/turnover/${pathVar1}/${pathVar2}`)
+                .get(`https://localhost:31511/orgdirectory/filter/turnover/${pathVar1}/${pathVar2}`)
                 .then(response => {
                     this.orgs = response.data;
                     console.log(response.data)
@@ -79,7 +79,7 @@ export const orgsState = observable({
         },
         getFilteredOrgsByEmployees(pathVar1, pathVar2) {
             axios
-                .get(`http://localhost:31511/orgdirectory/filter/employees/${pathVar1}/${pathVar2}`)
+                .get(`https://localhost:31511/orgdirectory/filter/employees/${pathVar1}/${pathVar2}`)
                 .then(response => {
                     this.orgs = response.data;
                     console.log(response.data)
@@ -90,7 +90,7 @@ export const orgsState = observable({
 
         getOrgsGroupCntByAddress() {
             axios
-                .get("http://localhost:31510/orgs/group-count/by-address")
+                .get("https://localhost:31510/orgs/group-count/by-address")
                 .then(response => {
                     console.log(response.data)
                     alert(`Groups: ${response.data}`);
@@ -101,7 +101,7 @@ export const orgsState = observable({
 
         getOrgsWhereTypeGreaterThanGiven(params) {
             axios
-                .get("http://localhost:31510/orgs/type", {params})
+                .get("https://localhost:31510/orgs/type", {params})
                 .then(response => {
                     this.orgs = response.data;
                     console.log(response.data)
