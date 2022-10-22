@@ -12,7 +12,7 @@
     </parent>
 
     <packaging>war</packaging>
-    <name>SOA_Labs</name>
+    <name>FilterService</name>
     <description>Service oriented architecture labs</description>
 
     <groupId>soa.lab</groupId>
