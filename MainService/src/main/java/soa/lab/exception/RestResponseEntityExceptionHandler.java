@@ -8,6 +8,7 @@ import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(e, errorDTO, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
-    @ExceptionHandler(value = {ConstraintViolationException.class, IllegalArgumentException.class, PropertyValueException.class, DataIntegrityViolationException.class, ArrayIndexOutOfBoundsException.class, RSQLParserException.class})
+    @ExceptionHandler(value = {ConstraintViolationException.class, IllegalArgumentException.class, PropertyValueException.class, DataIntegrityViolationException.class, ArrayIndexOutOfBoundsException.class, RSQLParserException.class, InvalidDataAccessApiUsageException.class})
     protected ResponseEntity<Object> handleDataIncorrect(RuntimeException e, WebRequest request) {
         log.error("{}: {}", e.getClass().getSimpleName(), e.getMessage());
         ErrorDTO errorDTO = new ErrorDTO(e.getMessage());
