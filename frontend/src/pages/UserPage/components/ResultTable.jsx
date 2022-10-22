@@ -3,6 +3,7 @@ import {useTable} from "react-table";
 import {orgsState} from "../../../globalState/orgs"
 import {useMemo} from "react";
 import {observer} from "mobx-react";
+import AlertMessage from "../../../components/AlertMessage";
 
 export const ResultTable = observer(() => {
 
@@ -64,30 +65,39 @@ export const ResultTable = observer(() => {
             <Heading align="center" as="h4" size="md" letterSpacing={"tighter"} mx={10} mb={5}>
                 <Text>Результат запроса</Text>
             </Heading>
-            <Table {...getTableProps()}>
-                <Thead>
-                    {headerGroups.map(headerGroup => (
-                        <Tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map(column => (
-                                <Th {...column.getHeaderProps()}>{column.render('Header')}</Th>
-                            ))}
-                        </Tr>
-                    ))}
-                </Thead>
-                <Tbody {...getTableBodyProps()}>
-                    {rows.map((row) => {
-                        prepareRow(row)
-                        return (
-                            <Tr {...row.getRowProps()}>
-                                {row.cells.map(cell => {
-                                    return <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>
-                                })}
+            {
+                orgsState.response.isError !== null &&
+                <Box textAlign="center" mx="40%">
+                    <AlertMessage status={orgsState.response.isError ? "error" : "success"}
+                                  message={orgsState.response.message}
+                                  title={orgsState.response.isError ? "Error" : "Success"}/>
+                </Box>
+            }
+            {orgsState.orgs.length !== 0 &&
+                <Table {...getTableProps()}>
+                    <Thead>
+                        {headerGroups.map(headerGroup => (
+                            <Tr {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map(column => (
+                                    <Th {...column.getHeaderProps()}>{column.render('Header')}</Th>
+                                ))}
                             </Tr>
-                        )
-                    })}
-                </Tbody>
-            </Table>
-
+                        ))}
+                    </Thead>
+                    <Tbody {...getTableBodyProps()}>
+                        {rows.map((row) => {
+                            prepareRow(row)
+                            return (
+                                <Tr {...row.getRowProps()}>
+                                    {row.cells.map(cell => {
+                                        return <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>
+                                    })}
+                                </Tr>
+                            )
+                        })}
+                    </Tbody>
+                </Table>
+            }
         </Box>
     );
 });
