@@ -3,6 +3,8 @@ import NumberControl from "../../../components/NumberControl";
 import TextControl from "../../../components/TextControl";
 import {useState} from "react";
 import {orgsState} from "../../../globalState/orgs";
+import {validateAddUpdOrgsInput} from "../../../utils/validateInput";
+import AlertMessage from "../../../components/AlertMessage";
 
 
 export default function AddUpdOrgsForm() {
@@ -18,53 +20,90 @@ export default function AddUpdOrgsForm() {
     const [officialAddressTownX, setOfficialAddressTownX] = useState("14");
     const [officialAddressTownY, setOfficialAddressTownY] = useState("8");
     const [officialAddressTownName, setOfficialAddressTownName] = useState("VU");
+    const [error, setError] = useState({isError: false, message: ""})
 
     const addSubmitHandler = e => {
         e.preventDefault();
-        orgsState.addOrgs({
-            id,
-            name,
-            employeesCount,
-            coordinates: {
-                x: coordinatesX,
-                y: coordinatesY
-            },
-            creationDate,
-            annualTurnover,
-            type,
-            officialAddress: {
-                zipCode: officialAddressZipCode,
-                town: {
-                    x: officialAddressTownX,
-                    y: officialAddressTownY,
-                    name: officialAddressTownName
-                }
+        const validation = validateAddUpdOrgsInput({
+                id,
+                name,
+                employeesCount,
+                coordinatesX,
+                coordinatesY,
+                creationDate,
+                annualTurnover,
+                type,
+                officialAddressZipCode,
+                officialAddressTownX,
+                officialAddressTownY,
+                officialAddressTownName
             }
-        });
+        );
+        setError({isError: !validation.isValid, message: validation.message})
+        if (validation.isValid)
+            orgsState.addOrgs({
+                isUpd: false,
+                id,
+                name,
+                employeesCount,
+                coordinates: {
+                    x: coordinatesX,
+                    y: coordinatesY
+                },
+                creationDate,
+                annualTurnover,
+                type,
+                officialAddress: {
+                    zipCode: officialAddressZipCode,
+                    town: {
+                        x: officialAddressTownX,
+                        y: officialAddressTownY,
+                        name: officialAddressTownName
+                    }
+                }
+            });
     };
 
     const updSubmitHandler = e => {
         e.preventDefault();
-        orgsState.updateOrgs({
-            id,
-            name,
-            employeesCount,
-            coordinates: {
-                x: coordinatesX,
-                y: coordinatesY
-            },
-            creationDate,
-            annualTurnover,
-            type,
-            officialAddress: {
-                zipCode: officialAddressZipCode,
-                town: {
-                    x: officialAddressTownX,
-                    y: officialAddressTownY,
-                    name: officialAddressTownName
-                }
+        const validation = validateAddUpdOrgsInput({
+                isUpd: true,
+                id,
+                name,
+                employeesCount,
+                coordinatesX,
+                coordinatesY,
+                creationDate,
+                annualTurnover,
+                type,
+                officialAddressZipCode,
+                officialAddressTownX,
+                officialAddressTownY,
+                officialAddressTownName
             }
-        });
+        );
+        setError({isError: !validation.isValid, message: validation.message})
+        if (validation.isValid)
+            orgsState.updateOrgs({
+                id,
+                name,
+                employeesCount,
+                coordinates: {
+                    x: coordinatesX,
+                    y: coordinatesY
+                },
+                creationDate,
+                annualTurnover,
+                type,
+                officialAddress: {
+                    zipCode: officialAddressZipCode,
+                    town: {
+                        x: officialAddressTownX,
+                        y: officialAddressTownY,
+                        name: officialAddressTownName
+                    }
+                }
+            });
     };
 
     return (
@@ -104,6 +143,7 @@ export default function AddUpdOrgsForm() {
                     <Button colorScheme='green' onClick={addSubmitHandler}>Добавить</Button>
                     <Button colorScheme='yellow' onClick={updSubmitHandler}>Обновить</Button>
                 </Flex>
+                {error.isError && <AlertMessage status={"error"} title={"Ошибка валидации"} message={error.message}/>}
             </form>
         </Box>
     );

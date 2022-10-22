@@ -2,10 +2,13 @@ import {Box, Button, Flex, FormLabel, Heading, Text} from "@chakra-ui/react";
 import TextControl from "../../../components/TextControl";
 import {useState} from "react";
 import {orgsState} from "../../../globalState/orgs";
+import AlertMessage from "../../../components/AlertMessage";
+import {validateGetByTypeInput} from "../../../utils/validateInput";
 
 
 export default function AdditionalGetOrgsForm() {
     const [type, setType] = useState();
+    const [error, setError] = useState({isError: false, message: ""})
 
     const groupByAddressSubmitHandler = e => {
         e.preventDefault();
@@ -14,7 +17,10 @@ export default function AdditionalGetOrgsForm() {
 
     const getByTypeSubmitHandler = e => {
         e.preventDefault();
-        orgsState.getOrgsWhereTypeGreaterThanGiven({type});
+        const validation = validateGetByTypeInput({type});
+        setError({isError: !validation.isValid, message: validation.message})
+        if (validation.isValid)
+            orgsState.getOrgsWhereTypeGreaterThanGiven({type});
     };
 
     return (
@@ -38,6 +44,7 @@ export default function AdditionalGetOrgsForm() {
                     <Button colorScheme='blue' onClick={getByTypeSubmitHandler}>Выполнить</Button>
                 </Flex>
             </form>
+            {error.isError && <AlertMessage status={"error"} title={"Ошибка валидации"} message={error.message}/>}
         </Box>
     );
 }

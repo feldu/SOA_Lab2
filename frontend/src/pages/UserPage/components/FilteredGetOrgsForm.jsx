@@ -2,22 +2,31 @@ import {Box, Button, Flex, FormLabel, Heading, Text} from "@chakra-ui/react";
 import NumberControl from "../../../components/NumberControl";
 import {useState} from "react";
 import {orgsState} from "../../../globalState/orgs";
+import {validateFilterByAnalInput, validateFilterByEmployeesInput} from "../../../utils/validateInput";
+import AlertMessage from "../../../components/AlertMessage";
 
 
 export default function FilteredGetOrgsForm() {
     const [minAnnualTurnover, setMinAnnualTurnover] = useState();
     const [maxAnnualTurnover, setMaxAnnualTurnover] = useState();
-    const [minEmployeeCount, setMinEmployeeCount] = useState();
-    const [maxEmployeeCount, setMaxEmployeeCount] = useState();
+    const [minEmployeesCount, setMinEmployeesCount] = useState();
+    const [maxEmployeesCount, setMaxEmployeesCount] = useState();
+    const [error, setError] = useState({isError: false, message: ""})
 
     const getFilteredByAnalSubmitHandler = e => {
         e.preventDefault();
-        orgsState.getFilteredOrgsByAnal(minAnnualTurnover, maxAnnualTurnover);
+        const validation = validateFilterByAnalInput({minAnnualTurnover, maxAnnualTurnover})
+        setError({isError: !validation.isValid, message: validation.message})
+        if (validation.isValid)
+            orgsState.getFilteredOrgsByAnal(minAnnualTurnover, maxAnnualTurnover);
     };
 
     const getFilteredByEmployeesSubmitHandler = e => {
         e.preventDefault();
-        orgsState.getFilteredOrgsByEmployees(minEmployeeCount, maxEmployeeCount);
+        const validation = validateFilterByEmployeesInput({minEmployeesCount, maxEmployeesCount})
+        setError({isError: !validation.isValid, message: validation.message})
+        if (validation.isValid)
+            orgsState.getFilteredOrgsByEmployees(minEmployeesCount, maxEmployeesCount);
     };
 
     return (
@@ -38,14 +47,15 @@ export default function FilteredGetOrgsForm() {
             </form>
             <form>
                 <FormLabel>Отфильтровать организации по количеству сотрудников</FormLabel>
-                <NumberControl label={"Min employees count:"} min={0} value={minEmployeeCount}
-                               setValue={setMinEmployeeCount}/>
-                <NumberControl label={"Max employees count:"} min={0} value={maxEmployeeCount}
-                               setValue={setMaxEmployeeCount}/>
+                <NumberControl label={"Min employees count:"} min={0} value={minEmployeesCount}
+                               setValue={setMinEmployeesCount}/>
+                <NumberControl label={"Max employees count:"} min={0} value={maxEmployeesCount}
+                               setValue={setMaxEmployeesCount}/>
                 <Flex mt={5} justifyContent="center">
                     <Button colorScheme='blue' onClick={getFilteredByEmployeesSubmitHandler}>Выполнить</Button>
                 </Flex>
             </form>
+            {error.isError && <AlertMessage status={"error"} title={"Ошибка валидации"} message={error.message}/>}
         </Box>
     );
 }

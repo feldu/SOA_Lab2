@@ -4,6 +4,8 @@ import NumberControl from "../../../components/NumberControl";
 import SwitchControl from "../../../components/SwitchControl";
 import TextControl from "../../../components/TextControl";
 import {orgsState} from "../../../globalState/orgs";
+import {validateByIdInput, validateGetOrgsInput} from "../../../utils/validateInput";
+import AlertMessage from "../../../components/AlertMessage";
 
 
 export default function GetOrgsForm() {
@@ -15,15 +17,30 @@ export default function GetOrgsForm() {
     const [filter, setFilter] = useState("");
     const [sort, setSort] = useState("");
     const [id, setId] = useState("");
+    const [error, setError] = useState({isError: false, message: ""})
 
     const getSubmitHandler = e => {
         e.preventDefault();
-        orgsState.fetchOrgs({page, size, filter, sort});
+        const validation = validateGetOrgsInput({
+            isPaginationEnable,
+            isFilteringEnable,
+            isSortingEnable,
+            page,
+            size,
+            filter,
+            sort
+        });
+        setError({isError: !validation.isValid, message: validation.message})
+        if (validation.isValid)
+            orgsState.fetchOrgs({page, size, filter, sort});
     };
 
     const getByIdSubmitHandler = e => {
         e.preventDefault();
-        orgsState.getOrgById(id);
+        const validation = validateByIdInput({id});
+        setError({isError: !validation.isValid, message: validation.message})
+        if (validation.isValid)
+            orgsState.getOrgById(id);
     };
 
     return (
@@ -64,6 +81,7 @@ export default function GetOrgsForm() {
                     <Button colorScheme='blue' onClick={getByIdSubmitHandler}>Получить</Button>
                 </Flex>
             </form>
+            {error.isError && <AlertMessage status={"error"} title={"Ошибка валидации"} message={error.message}/>}
         </Box>
     );
 }
