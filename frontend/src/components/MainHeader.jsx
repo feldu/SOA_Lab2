@@ -8,7 +8,7 @@ export default function MainHeader() {
                 <Avatar name='The last gauleiter' src='https://i.ytimg.com/vi/GfLizdWKAWQ/maxresdefault.jpg' my={2}
                         mr={3}/>
                 <Box>
-                    <Text>Выполнил: Остряков Егор Александрвоич</Text>
+                    <Text>Выполнил: Остряков Егор Александрович</Text>
                     <Text>Группа: P34111</Text>
                 </Box>
             </Flex>
