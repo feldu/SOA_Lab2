@@ -1,5 +1,5 @@
 import {Box, Button, Flex, Heading, Text} from "@chakra-ui/react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import NumberControl from "../../../components/NumberControl";
 import SwitchControl from "../../../components/SwitchControl";
 import TextControl from "../../../components/TextControl";
@@ -12,12 +12,21 @@ export default function GetOrgsForm() {
     const [isPaginationEnable, setPaginationEnable] = useState(false);
     const [isFilteringEnable, setFilteringEnable] = useState(false);
     const [isSortingEnable, setSortingEnable] = useState(false);
-    const [page, setPage] = useState();
-    const [size, setSize] = useState();
+    const [page, setPage] = useState("");
+    const [size, setSize] = useState("");
     const [filter, setFilter] = useState("");
     const [sort, setSort] = useState("");
     const [id, setId] = useState("");
     const [error, setError] = useState({isError: false, message: ""})
+
+    useEffect(() => {
+        if (!isPaginationEnable) {
+            setPage("");
+            setSize("");
+        }
+        if (!isSortingEnable) setSort("");
+        if (!isFilteringEnable) setFilter("");
+    }, [isPaginationEnable, isFilteringEnable, isSortingEnable])
 
     const getSubmitHandler = e => {
         e.preventDefault();
