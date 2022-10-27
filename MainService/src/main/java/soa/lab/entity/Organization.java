@@ -30,7 +30,7 @@ public class Organization {
     @Min(0)
     private Integer employeesCount;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "coordinates_id", referencedColumnName = "id", nullable = false)
     @NotNull
     private Coordinates coordinates;
@@ -48,7 +48,7 @@ public class Organization {
     @Column(name = "type")
     private OrganizationType type;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address officialAddress;
 

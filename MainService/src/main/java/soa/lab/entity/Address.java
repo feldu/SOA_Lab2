@@ -24,7 +24,7 @@ public class Address {
     @Size(max = 30)
     private String zipCode;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "town_id", referencedColumnName = "id", nullable = false)
     @NotNull
     private Location town;
