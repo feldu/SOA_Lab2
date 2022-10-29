@@ -99,13 +99,16 @@ public class OrganizationService {
     }
 
     public List<Organization> getOrgsWhereTypeGreaterThanGiven(String type) {
-        return organizationRepository.getOrganizationsByTypeGreaterThan(OrganizationType.valueOf(type));
+        List<Organization> organizations = organizationRepository.getOrganizationsByTypeGreaterThan(OrganizationType.valueOf(type));
+        if (organizations.isEmpty()) throw new DataNotFoundException("Organization not found");
+        return organizations;
     }
 
     @Transactional
     public List<Organization> deleteOrganizationsByAnnualTurnover(Float annualTurnover) {
-        return organizationRepository.deleteOrganizationsByAnnualTurnoverEquals(annualTurnover);
-
+        List<Organization> organizations = organizationRepository.deleteOrganizationsByAnnualTurnoverEquals(annualTurnover);
+        if (organizations.isEmpty()) throw new DataNotFoundException("Organization not found");
+        return organizations;
     }
 
 }

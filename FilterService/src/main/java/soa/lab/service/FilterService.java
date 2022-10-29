@@ -26,13 +26,17 @@ public class FilterService {
     public List<Organization> filterOrgsByTurnover(Float min, Float max) {
         Organization[] responseBody = getOrganizationsFromMainService();
         log.info("Request from main service received with {} elements.\nFiltering by anal.", responseBody.length);
-        return Arrays.stream(responseBody).filter(o -> o.getAnnualTurnover() >= min && o.getAnnualTurnover() <= max).collect(Collectors.toList());
+        List<Organization> organizations = Arrays.stream(responseBody).filter(o -> o.getAnnualTurnover() >= min && o.getAnnualTurnover() <= max).collect(Collectors.toList());
+        if (organizations.isEmpty()) throw new DataNotFoundException("Organizations not found");
+        return organizations;
     }
 
     public List<Organization> filterOrgsByEmployeesCount(Float min, Float max) {
         Organization[] responseBody = getOrganizationsFromMainService();
         log.info("Request from main service received with {} elements.\nFiltering by employee.", responseBody.length);
-        return Arrays.stream(responseBody).filter(o -> o.getEmployeesCount() >= min && o.getEmployeesCount() <= max).collect(Collectors.toList());
+        List<Organization> organizations = Arrays.stream(responseBody).filter(o -> o.getEmployeesCount() >= min && o.getEmployeesCount() <= max).collect(Collectors.toList());
+        if (organizations.isEmpty()) throw new DataNotFoundException("Organizations not found");
+        return organizations;
     }
 
     private Organization[] getOrganizationsFromMainService() {
