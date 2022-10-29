@@ -47,7 +47,7 @@ export const validateAddUpdOrgsInput = ({
         return {isValid: false, message: "Creation date: формат не соответсвует образцу"}
     if (!annualTurnover || !Number.isFinite(+annualTurnover) || annualTurnover <= 0)
         return {isValid: false, message: "Annual turnover: положительное число"}
-    if (type && !["PUBLIC", "GOVERNMENT", "TRUST"].includes(type))
+    if (["PUBLIC", "GOVERNMENT", "TRUST"].indexOf(type) === -1)
         return {isValid: false, message: "Type: строка, содержащая PUBLIC, GOVERNMENT, TRUST"}
     if (!officialAddressZipCode || officialAddressZipCode.length > 30)
         return {isValid: false, message: "Official address zip code: строка не может быть пустой и длиннее 30"}
@@ -77,7 +77,7 @@ export const validateFilterByEmployeesInput = ({minEmployeesCount, maxEmployeesC
 };
 
 export const validateGetByTypeInput = ({type}) => {
-    if (!["PUBLIC", "GOVERNMENT", "TRUST"].includes(type))
+    if (["PUBLIC", "GOVERNMENT", "TRUST"].indexOf(type) === -1)
         return {isValid: false, message: "Type: строка, содержащая PUBLIC, GOVERNMENT, TRUST"}
     return {isValid: true, message: null}
 };
