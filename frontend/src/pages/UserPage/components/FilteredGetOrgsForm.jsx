@@ -7,10 +7,10 @@ import AlertMessage from "../../../components/AlertMessage";
 
 
 export default function FilteredGetOrgsForm() {
-    const [minAnnualTurnover, setMinAnnualTurnover] = useState();
-    const [maxAnnualTurnover, setMaxAnnualTurnover] = useState();
-    const [minEmployeesCount, setMinEmployeesCount] = useState();
-    const [maxEmployeesCount, setMaxEmployeesCount] = useState();
+    const [minAnnualTurnover, setMinAnnualTurnover] = useState("");
+    const [maxAnnualTurnover, setMaxAnnualTurnover] = useState("");
+    const [minEmployeesCount, setMinEmployeesCount] = useState("");
+    const [maxEmployeesCount, setMaxEmployeesCount] = useState("");
     const [error, setError] = useState({isError: false, message: ""})
 
     const getFilteredByAnalSubmitHandler = e => {

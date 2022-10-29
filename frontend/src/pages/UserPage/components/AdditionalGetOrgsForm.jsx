@@ -7,7 +7,7 @@ import {validateGetByTypeInput} from "../../../utils/validateInput";
 
 
 export default function AdditionalGetOrgsForm() {
-    const [type, setType] = useState();
+    const [type, setType] = useState("");
     const [error, setError] = useState({isError: false, message: ""})
 
     const groupByAddressSubmitHandler = e => {
