@@ -9,6 +9,7 @@ import soa.lab.dto.OrganizationDTO;
 import soa.lab.entity.Organization;
 import soa.lab.service.OrganizationService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -31,7 +32,7 @@ public class CrudController {
     }
 
     @PostMapping("/orgs")
-    public ResponseEntity<Organization> addOrg(@RequestBody OrganizationDTO orgDTO) {
+    public ResponseEntity<Organization> addOrg(@RequestBody @Valid OrganizationDTO orgDTO) {
         log.info("Request to add org with body: {}", orgDTO);
         Organization org = new Organization(orgDTO);
         log.info("Request to add org handled");
@@ -39,7 +40,7 @@ public class CrudController {
     }
 
     @PutMapping("/orgs")
-    public ResponseEntity<Organization> updateOrg(@RequestBody OrganizationDTO orgDTO) {
+    public ResponseEntity<Organization> updateOrg(@RequestBody @Valid OrganizationDTO orgDTO) {
         log.info("Request to update org with body: {}", orgDTO);
         Organization orgUpd = new Organization(orgDTO);
         log.info("Request to update org handled");
@@ -47,13 +48,13 @@ public class CrudController {
     }
 
     @GetMapping("/orgs/{id}")
-    public ResponseEntity<Organization> getOrgById(@PathVariable Long id) {
+    public ResponseEntity<Organization> getOrgById(@PathVariable @Valid Long id) {
         log.info("Request to get org with id: {}", id);
         return new ResponseEntity<>(organizationService.getOrgById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/orgs/{id}")
-    public ResponseEntity<Organization> deleteOrgById(@PathVariable Long id) {
+    public ResponseEntity<Organization> deleteOrgById(@PathVariable @Valid Long id) {
         log.info("Request to delete org with id: {}", id);
         return new ResponseEntity<>(organizationService.deleteOrgById(id), HttpStatus.OK);
     }
